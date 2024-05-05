@@ -13,10 +13,12 @@ namespace Aquarium.Models
 
         public Aquarium()
         {
-            Tanks = new List<Tank>()
-            {
+            Tanks = new List<Tank>();
+        }
 
-            }
+        public void AddTank()
+        {
+
         }
     }
 }

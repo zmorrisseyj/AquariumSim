@@ -1,4 +1,5 @@
 ﻿using Aquarium.Interfaces;
+using Aquarium.Models.Tanks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,13 @@ namespace Aquarium.Models
         public double Weight { get; set; }
         public double Length { get; set; }
         public double Age { get; set; }
-        public double LifeSpan { get; set; }
         public Color Color { get; set; }
         public double DistanceSwam { get; set; } = 0;
         public double StomachSize { get; set; } = 10;
         public double FoodInStomach { get; set; } = 0;
         public double Speed { get; set; }
 
-        public Fish(string nm, string dsc, double wt, double len, double a, Color clr, double spd, double ls)
+        public Fish(string nm, string dsc, double wt, double len, double a, Color clr, double spd)
         {
             Name = nm;
             Description = dsc;
@@ -30,13 +30,13 @@ namespace Aquarium.Models
             Age = a;
             Color = clr;
             Speed = spd;
-            LifeSpan = ls;
-
         }
 
-        public virtual void Swim(double hours)
+        public virtual void Swim(double seconds, Tank tank)
         {
-            Console.WriteLine($"");
+            double distance = this.Speed * seconds;
+            Console.WriteLine($"{this.Name} swam for {seconds} seconds and covered a distance of {distance} meters in tank {tank.Name}");
+
         }
 
         public void Eat(double food)
@@ -55,8 +55,16 @@ namespace Aquarium.Models
 
         public virtual void Poop()
         {
-            Console.WriteLine($"{this.Name} pooped.");
-            FoodInStomach--;
+            if(FoodInStomach > 0)
+            {
+                Console.WriteLine($"{this.Name} pooped.");
+                FoodInStomach--;
+            }
+
+            if(FoodInStomach < 0)
+            {
+                FoodInStomach = 0;
+            }
         }
 
         public void DisplayInfo()

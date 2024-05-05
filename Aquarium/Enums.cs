@@ -19,14 +19,4 @@ namespace Aquarium
         Pink,
         Brown
     }
-
-    public enum Species
-    {
-        Goldfish,
-        Guppy,
-        Betta,
-        Ciclid,
-        Pleco,
-        Koi
-    }
 }

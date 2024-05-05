@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aquarium.Models.Tanks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -11,10 +12,11 @@ namespace Aquarium.Interfaces
     {
         public void DisplayInfo();
 
-        public void Swim(double hours);
+        public void Swim(double hours, Tank tank);
 
         public void Eat(double food);
 
         public void Poop();
+
     }
 }
