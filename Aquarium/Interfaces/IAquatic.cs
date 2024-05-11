@@ -1,4 +1,4 @@
-﻿using Aquarium.Models.Tanks;
+﻿using Aquarium.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +17,5 @@ namespace Aquarium.Interfaces
         public void Eat(double food);
 
         public void Poop();
-
     }
 }

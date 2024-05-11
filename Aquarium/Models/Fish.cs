@@ -1,5 +1,4 @@
 ﻿using Aquarium.Interfaces;
-using Aquarium.Models.Tanks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,29 +13,34 @@ namespace Aquarium.Models
         public string Description { get; set; }
         public double Weight { get; set; }
         public double Length { get; set; }
-        public double Age { get; set; }
         public Color Color { get; set; }
         public double DistanceSwam { get; set; } = 0;
         public double StomachSize { get; set; } = 10;
         public double FoodInStomach { get; set; } = 0;
+        public double TimeHungry { get; set; } = 0;
         public double Speed { get; set; }
 
-        public Fish(string nm, string dsc, double wt, double len, double a, Color clr, double spd)
+        public Fish(string nm, string dsc, double wt, double len, Color clr, double spd)
         {
             Name = nm;
             Description = dsc;
             Weight = wt;
             Length = len;
-            Age = a;
             Color = clr;
             Speed = spd;
         }
 
-        public virtual void Swim(double seconds, Tank tank)
+        public override string ToString()
         {
-            double distance = this.Speed * seconds;
-            Console.WriteLine($"{this.Name} swam for {seconds} seconds and covered a distance of {distance} meters in tank {tank.Name}");
+            return $"{Name} - {this.GetType().ToString().Split('.').Last()}";
+        }
 
+
+        public virtual void Swim(double hours, Tank tank)
+        {
+            double distance = this.Speed * hours;
+            DistanceSwam += distance;
+            Console.WriteLine($"{this.Name} swam for {hours} {(hours > 1 ? "hours" : "hour")} and covered a distance of {distance} meters in tank {tank.Name}");
         }
 
         public void Eat(double food)
@@ -44,13 +48,14 @@ namespace Aquarium.Models
             if(FoodInStomach + food <= StomachSize)
             {
                 FoodInStomach += food;
-                Console.Write($"{this.Name} ate {food} fish flakes.");
+                Console.WriteLine($"{this.Name} ate {food} fish flakes.");
             }
             else
             {
-                Console.Write($"{this.Name} is too full to eat all {food} fish flakes. It only ate {StomachSize - FoodInStomach} fish flakes");
+                Console.WriteLine($"{this.Name} is too full to eat all {food} fish flakes. It only ate {StomachSize - FoodInStomach} fish flakes");
                 FoodInStomach = StomachSize;
             }
+            TimeHungry = 0;
         }
 
         public virtual void Poop()
@@ -60,8 +65,12 @@ namespace Aquarium.Models
                 Console.WriteLine($"{this.Name} pooped.");
                 FoodInStomach--;
             }
+            else if (FoodInStomach == 0)
+            {
+                TimeHungry++;
+            }
 
-            if(FoodInStomach < 0)
+            if (FoodInStomach < 0)
             {
                 FoodInStomach = 0;
             }
@@ -69,10 +78,9 @@ namespace Aquarium.Models
 
         public void DisplayInfo()
         {
-            Console.WriteLine();
             foreach (var prop in GetType().GetProperties())
             {
-                Console.WriteLine($"{prop.Name} - {prop.GetValue(this)}");
+                Console.WriteLine(string.Format("{0,-15} - {1}", prop.Name.PadLeft(15), prop.GetValue(this)));
             }
         }
     }

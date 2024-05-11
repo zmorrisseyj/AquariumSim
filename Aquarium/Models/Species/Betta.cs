@@ -1,5 +1,4 @@
 ﻿using Aquarium.Interfaces;
-using Aquarium.Models.Tanks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +10,33 @@ namespace Aquarium.Models.Species
     public class Betta : Fish
     {
 
-        public Betta(string nm, string dsc, double wt, double len, double a, Color clr)
-            : base(nm, dsc, wt, len, a, clr, 5)
+        public Betta(string nm, string dsc, double wt, double len, Color clr)
+            : base(nm, dsc, wt, len, clr, 5)
         {
 
         }
 
-        public override void Swim(double seconds, Tank tank)
+        public override void Poop()
         {
-            base.Swim(seconds, tank);
+            if (FoodInStomach > 0)
+            {
+                Console.WriteLine($"{this.Name} pooped.");
+                FoodInStomach -= 0.5;
+            }
+            else if (FoodInStomach == 0)
+            {
+                TimeHungry++;
+            }
+
+            if (FoodInStomach < 0)
+            {
+                FoodInStomach = 0;
+            }
+        }
+
+        public override void Swim(double hours, Tank tank)
+        {
+            base.Swim(hours, tank);
             Fight(tank);
         }
 
@@ -31,8 +48,10 @@ namespace Aquarium.Models.Species
                 {
                     if (tank.Species[i] != this)
                     {
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine($"Oh no! You put a betta in a tank with another fish. {Name} killed {tank.Species[i]} :(.");
-                        tank.Species.RemoveAt(i);
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        tank.deadFish.Add(tank.Species[i]);
                         return;
                     }
                 }

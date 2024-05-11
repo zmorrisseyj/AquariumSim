@@ -1,5 +1,4 @@
 ﻿using Aquarium.Interfaces;
-using Aquarium.Models.Tanks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +10,15 @@ namespace Aquarium.Models.Species
     public class Pleco : Fish
     {
         
-        public Pleco(string nm, string dsc, double wt, double len, double a, Color clr) 
-            : base(nm, dsc, wt, len, a, clr, 3)
+        public Pleco(string nm, string dsc, double wt, double len, Color clr) 
+            : base(nm, dsc, wt, len, clr, 3)
         {
 
         }
 
-        public override void Swim(double seconds, Tank tank)
+        public override void Swim(double hours, Tank tank)
         {
-            base.Swim(seconds, tank);
+            base.Swim(hours, tank);
             EatAlgae(tank);
         }
 
@@ -28,7 +27,11 @@ namespace Aquarium.Models.Species
             if(FoodInStomach > 0)
             {
                 Console.WriteLine($"{this.Name} pooped.");
-                FoodInStomach -= 0.5;
+                FoodInStomach -= 2;
+            }
+            else if (FoodInStomach == 0)
+            {
+                TimeHungry++;
             }
 
             if (FoodInStomach < 0)
@@ -39,11 +42,19 @@ namespace Aquarium.Models.Species
 
         public void EatAlgae(Tank tank)
         {
-            if(tank.AlgaeAmount > 0)
+            if (tank.AlgaeLevel > 0 && FoodInStomach < StomachSize)
             {
+                int NumHungryPlecos = tank.Species.Where(s => s.GetType() == typeof(Pleco) && s.FoodInStomach < StomachSize).Count();
+                double AlgaeToEat = tank.AlgaeLevel / NumHungryPlecos;
+                AlgaeToEat = AlgaeToEat > 1 ? 1 : AlgaeToEat;
+
                 this.FoodInStomach++;
-                tank.AlgaeAmount--;
-                Console.WriteLine($"{Name} the pleco ate some algae. The amount of algae in the tank is now {tank.AlgaeAmount}.");
+                tank.AlgaeLevel-=AlgaeToEat;
+                Console.WriteLine($"{Name} the pleco ate {AlgaeToEat} algae. The amount of algae in the tank is now {tank.AlgaeLevel}.");
+            }
+            else if(FoodInStomach >= StomachSize)
+            {
+                Console.WriteLine($"{Name} the pleco was too full to eat any algae.");
             }
         }
     }

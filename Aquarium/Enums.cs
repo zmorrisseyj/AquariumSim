@@ -17,6 +17,7 @@ namespace Aquarium
         Orange,
         Purple,
         Pink,
-        Brown
+        Brown,
+        Gray
     }
 }
