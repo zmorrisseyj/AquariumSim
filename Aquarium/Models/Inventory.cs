@@ -127,12 +127,12 @@ namespace Aquarium.Models
                 }
                 else
                 {
-                    Console.WriteLine($"{input} is not a valid input for weight. Please enter a decimal number.");
+                    Console.WriteLine($"{input} is not a valid input for food amount. Please enter a decimal number.");
                 }
 
                 if (tempVal <= 0)
                 {
-                    Console.WriteLine($"{input} is not a valid input for weight. Please enter a positive number.");
+                    Console.WriteLine($"{input} is not a valid input for food amount. Please enter a positive number.");
                 }
                 else
                 {
