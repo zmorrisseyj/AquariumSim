@@ -29,14 +29,6 @@ namespace Aquarium.Models
             Species = sp;
         }
 
-        private void CheckFishStarving()
-        {
-            foreach(var fish in Species)
-            {
-                
-            }
-        }
-
         public override string ToString()
         {
             return string.Format("{0,-15} - {1}\n", $"Name".PadLeft(15), Name)
