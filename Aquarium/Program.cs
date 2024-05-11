@@ -1,9 +1,6 @@
 ﻿using Aquarium;
 using Aquarium.Models;
 using Aquarium.Models.Species;
-using System.Runtime.ConstrainedExecution;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine("\n\nWelcome to Zach's Aquarium!\n\n");

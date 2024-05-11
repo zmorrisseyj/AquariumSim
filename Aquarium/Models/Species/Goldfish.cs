@@ -1,10 +1,4 @@
-﻿using Aquarium.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Aquarium.Models.Species
 {
     public class Goldfish : Fish
