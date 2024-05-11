@@ -13,7 +13,11 @@ Inventory inventory = new Inventory(new List<Tank>
         new Goldfish("Appa", "White goldfish with orange dot on his head", 5.6, 4.5, Color.White),
         new Goldfish("Momo", "Orange goldfish with black markings", 8.1, 6.7, Color.Orange),
         new Goldfish("Floppsy", "Gray goldfish with white markings", 8.9, 7.1, Color.Gray),
-    })
+    }),
+    new Tank("Kendall's Betta Tank",15,new List<Fish>
+    {
+        new Betta("Appa", "Blue body with rainbow fins", 4.0, 6.8, Color.Blue),
+    }),
 });
 
 string selection = String.Empty;
